@@ -1,0 +1,117 @@
+<% layout("/layouts/boilerplate") %>
+
+
+    <div class="show-container">
+
+        <div class="show-card mt-4">
+            <div class="show-card-content">
+                <img src="<%= listing.image.url %>" class="show-card-img" alt="listing_image">
+                <div class="show-card-body">
+                    <div class="show-card-title">
+                        <h3>
+                            <%= listing.title %>
+                        </h3>
+                    </div>
+                    <p class="show-card-text"><b>Hosted by:</b> &nbsp; &nbsp;<i>
+                            <%= listing.owner.username %>
+                        </i> </p>
+                    <span><b>Highlights:</b></span>
+                    <p class="show-card-text">
+                        <%= listing.description %>
+                    </p>
+                    <span><b>Per Night:</b> </span><br>
+                    <span class="show-card-text" style="font-size: larger; font-weight: bold;">&#8377 <%= listing.price.toLocaleString("en-IN") %></span>
+                    <span>+ 18% GST</span><br><br>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="show-card-text"> &nbsp; &nbsp;<%= listing.location %>, <%= listing.country %></span>
+                    <br><br>
+                    <% if(currUser && !currUser._id.equals(listing.owner._id)){ %>
+                        <button class="btn btn-info">BOOK NOW</button>
+                    <% } %>
+                            <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+                                <div class="owner-btns">
+                                    <form action="/listings/<%=listing._id %>/edit" method="get">
+                                        <button class="btn btn-info edit-btn" style="width: 80px;">Edit</button>
+                                    </form>
+                                    <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
+                                        <button class="btn btn-info offset-3">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="review">
+            <div class="new-review mb-3">
+                <% if(currUser && !currUser._id.equals(listing.owner._id)){ %>
+                    <hr>
+                    <h5><b>Leave a Review</b></h5>
+                    <form action="/listings/<%=listing._id%>/reviews" method="post" novalidate class="needs-validation">
+
+
+                        <div class=" mt-3">
+                            <fieldset class="starability-grow">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <textarea name="review[comment]" id="comment" rows="3" style="width: 400px;" class="form-control" required></textarea>
+                            <div class="invalid-feedback">Please add some comment for review</div>
+                        </div>
+                        <button class="btn btn-info">Submit</button>
+                    </form>
+
+                    <% } %>
+            </div>
+
+            <div class="">
+                <% if(listing.review.length> 0) { %>
+                    <hr>
+                    <h5 class="mb-3"><b>All Reviews</b></h5>
+                    <div class="review-list">
+                        
+                        <% for(review of listing.review) { %>
+                            <div class="card   mb-3 review-list-items">
+                                <div class="review-list-card-body">
+                                    <span class="review-card-title">@<%= review.author.username %></span>
+                                    <br>
+
+                                    <% for (let i=0; i < review.rating; i++) { %>
+                                        <i class="fa-solid fa-star review-card-star"></i>
+                                        <% } %>
+
+                                            <p class="review-card-text">
+                                                <%= review.comment %>
+                                            </p>
+
+                                            <% if(currUser && currUser._id.equals(review.author._id)){ %>
+
+                                    <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post" class="mb-3">
+                                        <button class="btn btn-sm btn-dark">Delete</button>
+                                    </form>
+                                    <% } %>
+                                </div>
+
+                                
+                            </div>
+                            <% } %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>

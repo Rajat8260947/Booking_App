@@ -1,0 +1,91 @@
+<style>
+    .btn-search {
+        color: black;
+        border-radius: 25px;
+        padding: 0 1rem 0 1rem;
+    }
+
+    .btn-search i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+    .search-inp {
+        width: 250px;
+        border-radius: 25px;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .navbar-search {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;   
+    }
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <div class="navbar-logo-title me-auto">
+                    <a class="" href="/listings"><i class="fa-solid fa-compass-drafting"></i></a>
+                    <a href="/listings" class="brand-text"><b>StayEase</b></a>
+                </div>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+
+            <div class="collapse navbar-collapse d-lg-flex d-none" id="navbarNavAltMarkup">
+                    <div class="navbar-search">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
+                            <button class="btn btn-search btn-info" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                        </form>
+                    </div>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link-airbnb" href="/listings/new"><b>Host Your Place</b></a>
+                    <% if(!currUser){ %>
+                        <a class="nav-link-access btn btn-info" href="/signup">Sign Up</a>
+                        <a class="nav-link-access btn btn-info" href="/login">Log in</a>
+                    <% } %>
+                    <% if(currUser){ %>
+                        <a class="nav-link-access btn btn-info" href="/logout">Log out</a>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">StayEase</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <form class="d-flex mb-3" role="search">
+                        <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
+                        <button class="btn btn-search btn-info" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                    </form>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item mb-3">
+                            <a class="nav-link-airbnb" href="/listings/new"><b>Host Your Place</b></a>
+                        </li>
+                        <% if(!currUser){ %>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link-access btn btn-info" href="/signup">Sign Up</a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link-access btn btn-info" href="/login">Log in</a>
+                            </li>
+                        <% } %>
+                        <% if(currUser){ %>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link-access btn btn-info" href="/logout">Log out</a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
